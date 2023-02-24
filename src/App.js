@@ -6,7 +6,7 @@ export const App = () =>{
 }
 
 const Emojis =()=>{
-  const emojis=GetData("http://localhost:3004/names");
+  const emojis=GetData("https://emoji-api.com/emojis?access_key=5282cc0b5c6002c93326f7198c62dfcd7aff29bd");
   const [text, setText] = useState("");
 
   const handleChangeText=(e)=>{
@@ -21,11 +21,11 @@ const Emojis =()=>{
     <input className='search-input' type="text" value={text} onChange={(e)=>handleChangeText(e)}/>
     <ul>
       {emojis
-      .filter((emo) => emo.title.includes(text))
+      .filter((emo) => emo.unicodeName.includes(text))
       .map((emoji)=>(
         
-        <li onMouseLeave={(e)=>handleLeave(emoji.id)} onMouseOver={(e)=>handleHover(emoji.id)} onClick={(e)=>handleClick(emoji.symbol,emoji.id)} key={emoji.id}>
-          <span>{emoji.symbol+ " "+emoji.title} </span> <span id={emoji.id} className="emoji-status"></span> 
+        <li onMouseLeave={(e)=>handleLeave(emoji.slug)} onMouseOver={(e)=>handleHover(emoji.slug)} onClick={(e)=>handleClick(emoji.character,emoji.slug)} key={emoji.slug}>
+          <span>{emoji.character+ " "+emoji.unicodeName} </span> <span id={emoji.slug} className="emoji-status"></span> 
         </li>
         
       ))}
@@ -35,8 +35,8 @@ const Emojis =()=>{
 }
 
 
-const handleClick =(symbol,id)=>{
-  navigator.clipboard.writeText(symbol);
+const handleClick =(character,id)=>{
+  navigator.clipboard.writeText(character);
   document.getElementById(id).innerText="Kopyalandı";
 
 }
